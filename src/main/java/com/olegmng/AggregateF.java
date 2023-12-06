@@ -8,6 +8,8 @@ package com.olegmng;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 
 public class AggregateF {
     static Random random = new Random();
@@ -32,5 +34,16 @@ public class AggregateF {
 
         System.out.print("count: " + getListI().stream().map(it -> it * it).
                 filter(it -> it < 100_000).count());
+
+        //interface Runnable
+        System.out.print("\nRunnable, run(): ");
+        Runnable runnable = () -> System.out.print(ThreadLocalRandom.current().nextInt(111) + " ");
+        for (int i = 0; i < 7; i++) {
+            runnable.run();
+        }
+        //interface Supplier
+        Supplier supplier = () -> 5;
+        System.out.println("\nSupplier, get(): " + supplier.get());
+
     }
 }
