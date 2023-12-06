@@ -24,8 +24,13 @@ public class AggregateF {
     }
 
     public static void main(String[] args) {
-        System.out.println(getListI());
 
-        getListI().stream().filter(it -> it > 500_000).map(it -> it * 5 - 150).forEach(System.out::println);
+        System.out.println("max: " + getListI().stream().max(Integer::compare).get());
+
+        System.out.println("sum: " + getListI().stream().filter(it -> it > 500_000).
+                map(it -> it * 5 - 150).mapToInt(Integer::intValue).sum());
+
+        System.out.print("count: " + getListI().stream().map(it -> it * it).
+                filter(it -> it < 100_000).count());
     }
 }
