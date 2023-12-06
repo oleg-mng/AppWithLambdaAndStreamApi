@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class AggregateF {
@@ -43,7 +44,14 @@ public class AggregateF {
         }
         //interface Supplier
         Supplier supplier = () -> 5;
-        System.out.println("\nSupplier, get(): " + supplier.get());
+        System.out.print("\nSupplier, get(): " + supplier.get());
+
+        //interface Function
+        Function<String, Integer> stringIntegerFunction = arg -> arg.length();
+        System.out.print("\nFunction, apply(): " + stringIntegerFunction.apply("jcnucenwu"));
+
+        Function<String, String> stringFunction = it -> it.trim();
+        System.out.print("\nFunction, apply(): " + stringFunction.apply("    jcnTTTenwu   "));
 
     }
 }
