@@ -35,6 +35,9 @@ public class MethReference {
         System.out.println(personGenerator.get());
         System.out.println(personGenerator.get());
 
+        Function<String,Person> personFunction = Person::new;
+        System.out.println(personFunction.apply("Oleg"));
+
     }
 
     static void printNumberRandomLess100() {
@@ -55,9 +58,14 @@ public class MethReference {
     public static class Person {
         private static long counter = 1L;
         private String name;
+        private Supplier<String > wordGenerator;
 
         public Person() {
             name = "Person #" + counter++;
+        }
+        public Person(String name) {
+            this.name = name;
+            this.wordGenerator = this::generateNextWord;
         }
 
         @Override
@@ -65,6 +73,9 @@ public class MethReference {
             return "Person{" +
                    "name='" + name + '\'' +
                    '}';
+        }
+        private String generateNextWord(){
+            return "Effective";
         }
     }
 }
