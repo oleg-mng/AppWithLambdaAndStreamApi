@@ -1,7 +1,8 @@
 package com.olegmng;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 // * 2. Создать класс Employee (Сотрудник) с полями: String name, int age, double salary, String department
 //   * 2.1 Создать список из 10-20 сотрудников
@@ -22,6 +23,14 @@ public class Employee {
         this.age = age;
         this.salary = salary;
         this.department = department;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDepartment() {
+        return department;
     }
 
     @Override
@@ -59,6 +68,19 @@ public class Employee {
                 .distinct()
                 .forEach(System.out::println);
 
+        //* Из списка сотрудников с помощью стрима создать Map<String, List<Employee>> с отделами и
+        //  сотрудниками внутри отдела
+        System.out.println(listToMap(employeeList));
 
+
+    }
+    public static Map<String, Employee> listToMap(List<Employee> employeeList) {
+        List<String> list = employeeList.stream()
+                .map(it->it.department)
+                .distinct()
+                .toList();
+
+        return employeeList.stream()
+                .collect(Collectors.toMap(Employee::getDepartment, Function.identity(), (existing, replacement) -> existing));
     }
 }
