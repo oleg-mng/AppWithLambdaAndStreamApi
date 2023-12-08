@@ -25,7 +25,7 @@ public class AggregateF {
     }
 
     public static List<Integer> getStreamListI() {
-        List<Integer> listStream = Stream.generate(()-> ThreadLocalRandom.current().nextInt(1_000_000))
+        List<Integer> listStream = Stream.generate(() -> ThreadLocalRandom.current().nextInt(1_000_000))
                 .limit(1_000)
                 .toList();
 
@@ -39,8 +39,10 @@ public class AggregateF {
         System.out.println("max: " + getListI().stream().max(Integer::compare).get());
 
         //Все числа, больше чем 500_000, умножаем на 5, вычитаем от них 150 и суммировать
-        System.out.println("sum: " + getListI().stream().filter(it -> it > 500_000).
-                map(it -> it * 5 - 150).mapToInt(Integer::intValue).sum());
+        System.out.println("sum: " + getListI().stream().filter(it -> it > 500_000)
+                .parallel()
+                .map(it -> it * 5 - 150)
+                .mapToInt(Integer::intValue).sum());
 
         //Находим в потоке количество чисел, квадрат которых меньше, чем 100_000
         System.out.println("count: " + getListI().stream().map(it -> it * it).

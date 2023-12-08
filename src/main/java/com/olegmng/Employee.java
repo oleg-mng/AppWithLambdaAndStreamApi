@@ -36,6 +36,10 @@ public class Employee {
         return department;
     }
 
+    public double getSalary() {
+        return salary;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -67,7 +71,7 @@ public class Employee {
 
         //Вывести список всех различных отделов (department) по списку сотрудников
         employeeList.stream()
-                .map(it->it.department)
+                .map(it -> it.department)
                 .distinct()
                 .forEach(System.out::println);
 
@@ -75,11 +79,16 @@ public class Employee {
         //  сотрудниками внутри отдела
         System.out.println(listToMap(employeeList));
 
+        //* Из списка сорудников с помощью стрима создать Map<String, Double> с отделами и
+        ////   средней зарплатой внутри отдела
+        System.out.println(listDepAvSal(employeeList));
 
     }
+
     public static Map<String, List<Employee>> listToMap(List<Employee> employeeList) {
+        //стрим возвращающий отдельно список отделов
         List<String> list = employeeList.stream()
-                .map(it->it.department)
+                .map(it -> it.department)
                 .distinct()
                 .toList();
 
@@ -88,6 +97,16 @@ public class Employee {
 
 //        return employeeList.stream()
 //                .collect(Collectors.groupingBy(Employee::getDepartment, mapping(Employee::getName, toMap())));
+
+    }
+
+    public static Map<String, Double> listDepAvSal(List<Employee> employeeList) {
+
+        return employeeList.stream()
+                .collect(Collectors.toMap(employee -> employee.getName(), employee -> employee.getSalary()));
+
+
+
 
 
     }
