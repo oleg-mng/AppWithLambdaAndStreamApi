@@ -45,10 +45,20 @@ public class Employee {
                 new Employee("Grig", 31, 56_000, "IT"),
                 new Employee("Vika", 41, 23_000, "SALE"),
                 new Employee("Vlad", 25, 97_000, "IT")
-                );
+        );
 
-        employeeList.stream().filter(employee -> employee.salary<10000).map(employee -> new Employee(employee.name, employee.age,
-                employee.salary *1.2,employee.department)).forEach(System.out::println);
+        //сотрудникам, чья зарплата меньше 10_000, повысить зарплату на 20%
+        employeeList.stream()
+                .filter(employee -> employee.salary < 10000)
+                .map(employee -> new Employee(employee.name, employee.age, employee.salary * 1.2, employee.department))
+                .forEach(System.out::println);
+
+        //Вывести список всех различных отделов (department) по списку сотрудников
+        employeeList.stream()
+                .map(it->it.department)
+                .distinct()
+                .forEach(System.out::println);
+
 
     }
 }
