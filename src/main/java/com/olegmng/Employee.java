@@ -1,11 +1,7 @@
 package com.olegmng;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toMap;
 
 // * 2. Создать класс Employee (Сотрудник) с полями: String name, int age, double salary, String department
 //   * 2.1 Создать список из 10-20 сотрудников
@@ -103,11 +99,10 @@ public class Employee {
     public static Map<String, Double> listDepAvSal(List<Employee> employeeList) {
 
         return employeeList.stream()
-                .collect(Collectors.toMap(employee -> employee.getName(), employee -> employee.getSalary()));
+//                .collect(Collectors.groupingBy(e -> e.getName), Collectors.averagingDouble(e -> e.getSalary));
+//                .collect(Collectors.toMap(employee -> employee.getName(), employee -> employee.getSalary()));
 
-
-
-
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.averagingDouble(Employee::getSalary)));
 
     }
 }
