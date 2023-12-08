@@ -28,6 +28,8 @@ public class StreamShow {
 
         Optional<Product> optionalProduct = productList.stream()
                 .filter(it -> it.getName().startsWith("Ы"))
+                .parallel()
+                .sequential()
                 .findFirst();
 
         optionalProduct.ifPresent(it-> System.out.println(it));

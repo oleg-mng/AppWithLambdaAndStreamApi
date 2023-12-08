@@ -1,16 +1,14 @@
 package com.olegmng;
 
-// * 1. Создать список из 1_000 рандомных чисел от 1 до 1_000_000
-//   * 1.1 Найти максимальное
-//   * 2.2 Все числа, большие, чем 500_000, умножить на 5, отнять от них 150 и просуммировать
-//   * 2.3 Найти количество чисел, квадрат которых меньше, чем 100_000
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+import static java.util.concurrent.ThreadLocalRandom.current;
 
 public class AggregateF {
     static Random random = new Random();
@@ -26,19 +24,34 @@ public class AggregateF {
 
     }
 
+    public static List<Integer> getStreamListI() {
+        List<Integer> listStream = Stream.generate(()-> ThreadLocalRandom.current().nextInt(1_000_000))
+                .limit(1_000)
+                .toList();
+
+        return listStream;
+
+    }
+
     public static void main(String[] args) {
 
+        //Находим максимальное
         System.out.println("max: " + getListI().stream().max(Integer::compare).get());
 
+        //Все числа, больше чем 500_000, умножаем на 5, вычитаем от них 150 и суммировать
         System.out.println("sum: " + getListI().stream().filter(it -> it > 500_000).
                 map(it -> it * 5 - 150).mapToInt(Integer::intValue).sum());
 
-        System.out.print("count: " + getListI().stream().map(it -> it * it).
+        //Находим в потоке количество чисел, квадрат которых меньше, чем 100_000
+        System.out.println("count: " + getListI().stream().map(it -> it * it).
                 filter(it -> it < 100_000).count());
+
+        System.out.println("sum from listStream: " + getListI().stream().filter(it -> it > 500_000).
+                map(it -> it * 5 - 150).reduce(0, (a, b) -> a + b));
 
         //interface Runnable
         System.out.print("\nRunnable, run(): ");
-        Runnable runnable = () -> System.out.print(ThreadLocalRandom.current().nextInt(111) + " ");
+        Runnable runnable = () -> System.out.print(current().nextInt(111) + " ");
         for (int i = 0; i < 7; i++) {
             runnable.run();
         }

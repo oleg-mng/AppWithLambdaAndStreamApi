@@ -77,5 +77,9 @@ public class MethReference {
         private String generateNextWord(){
             return "Effective";
         }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 }
