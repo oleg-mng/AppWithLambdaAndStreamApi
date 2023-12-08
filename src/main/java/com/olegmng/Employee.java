@@ -51,7 +51,7 @@ public class Employee {
                 new Employee("Oleg", 31, 47_000, "IT"),
                 new Employee("Alex", 37, 85_000, "IT"),
                 new Employee("Marina", 33, 56_000, "BUH"),
-                new Employee("Grig", 31, 56_000, "IT"),
+                new Employee("Ramon", 31, 56_000, "IT"),
                 new Employee("Vika", 41, 23_000, "SALE"),
                 new Employee("Vlad", 25, 97_000, "IT")
         );
@@ -74,13 +74,13 @@ public class Employee {
 
 
     }
-    public static Map<String, Employee> listToMap(List<Employee> employeeList) {
+    public static Map<String, List<Employee>> listToMap(List<Employee> employeeList) {
         List<String> list = employeeList.stream()
                 .map(it->it.department)
                 .distinct()
                 .toList();
 
         return employeeList.stream()
-                .collect(Collectors.toMap(Employee::getDepartment, Function.identity(), (existing, replacement) -> existing));
+                .collect(Collectors.toMap(Employee::getName, Arrays::asList));
     }
 }
