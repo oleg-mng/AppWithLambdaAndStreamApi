@@ -4,6 +4,9 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toMap;
+
 // * 2. Создать класс Employee (Сотрудник) с полями: String name, int age, double salary, String department
 //   * 2.1 Создать список из 10-20 сотрудников
 //   * 2.2 Вывести список всех различных отделов (department) по списку сотрудников
@@ -81,6 +84,11 @@ public class Employee {
                 .toList();
 
         return employeeList.stream()
-                .collect(Collectors.toMap(Employee::getName, Arrays::asList));
+                .collect(Collectors.groupingBy(Employee::getDepartment));
+
+//        return employeeList.stream()
+//                .collect(Collectors.groupingBy(Employee::getDepartment, mapping(Employee::getName, toMap())));
+
+
     }
 }
